@@ -6,11 +6,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="styles.css">
-    <script src="index.js"></script>
+    <script src="index.js" defer></script>
 
     <title>Rock Paper Scissors</title>
 </head>
 <body>
+  <h1 class="title">Rock Paper Scissors Game</h1>    
+  
+  <main class="main-container">
+    <section class="section result">
+      <h2 class="title">Choose your option</h2>
+      <p id="result" class="text"></p>
+    </section>
+  
+    <section class="section game-options" id="game-options">
+      <button data-option="rock" id="Rock" class="btn">✊</button>
+      <button data-option="paper" id="Paper" class="btn">🤚</button>
+      <button data-option="scissors" id="Scissors" class="btn">✌️</button>
+    </section>
     
+    <section id="history" class="section history">
+      
+      <div id="results" class="results">
+        <section>
+          <h2 class="title">You</h2>
+          <p class="text" id="user-counter">0</p>          
+        </section>
+        <section>
+          <h2 class="title">Machine</h2>
+          <p class="text" id="machine-counter">0</p>
+        </section>
+      </div>
+      
+      <table class="table">
+        <caption class="title table-title">Game History</caption>
+
+        <thead class="table-header">
+          <tr>
+            <th class="text table-text">User Choice</th>
+            <th class="text table-text">Machine Choice</th>
+            <th class="text table-text">result</th>
+          </tr>
+        </thead>
+
+        <tbody id="table-body" class="table-body">
+          
+        </tbody>
+
+      </table>
+
+    </section>
+  </main>
+
 </body>
 </html>
