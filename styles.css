@@ -39,6 +39,14 @@ body{
   flex-direction: row;
   justify-content: space-evenly;
 }
+.game-options > div {
+  flex-direction: column;
+  align-items: center;
+  display: inherit;
+
+  text-align: center;
+}
+
 .results{
   display: flex;
   justify-content: space-evenly;
@@ -46,28 +54,24 @@ body{
 
   width: 100%;
 }
+.results > section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .history{
   text-align: center;
 }
+.game-choice{
+  font-size: 64px;
+  height: 82px;
 
-/* table */
-.table{
-  width: 80%;
-  font-weight: 900;
-  color: white;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
-.table-title, .table-data{
-  padding-top: 32px;
-  padding-bottom: 32px;
-}
-
-.table-header{
-  background-color: hsl(160, 16%, 64%);
-}
-.table-data{
-  background-color: hsl(159, 28%, 76%);
-}
-
 
 /* colors */
 
@@ -94,6 +98,26 @@ body{
 }
 
 .btn:hover{
+  cursor: pointer;
+  background-color: hsl(170, 9%, 32%);
+}
+
+
+.btn-refresh-game{
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+
+  font-size: 16px;
+
+  border: none;
+  border-radius: 8px;
+  
+  color: white;
+  background-color: hsl(170, 9%, 52%);
+}
+.btn-refresh-game:hover {
   cursor: pointer;
   background-color: hsl(170, 9%, 32%);
 }

@@ -1,8 +1,10 @@
 const optionsTag = document.getElementById('game-options');
 const gameHistory = [];
+let machineScore = 0;
+let userScore = 0;
 
 const getMachineChoice = () => {
-  const options = ['rock', 'paper', 'scissors'];
+  const options = ['✊', '🤚', '✌️'];
   const randomNum = Math.round(Math.random() * 2);
   const machineSelection = options[randomNum];
 
@@ -11,6 +13,7 @@ const getMachineChoice = () => {
 
 const getUserChoice = (e) => {
   const target = e.target;
+
   if (target.className !== 'btn') return;
 
   const userSelection = target.dataset.option;
@@ -20,100 +23,130 @@ const getUserChoice = (e) => {
 const playRound = (e) => {
   const userChoice = getUserChoice(e);
   const machineChoice = getMachineChoice();
+  let result = '';
 
   if (userChoice === undefined) return;
 
   const winConditions = {
-    rock: { scissors: true },
-    paper: { rock: true },
-    scissors: { paper: true },
-  };
-
-  const gameResume = {
-    userChoice: userChoice,
-    machineChoice: machineChoice,
-    result: undefined,
+    '✊': { '✌️': true },
+    '🤚': { '✊': true },
+    '✌️': { '🤚': true },
   };
 
   if (winConditions[userChoice][machineChoice]) {
-    gameResume.result = 'win';
-    gameHistory.push({ ...gameResume });
-    printResult(gameResume);
+    result = 'win';
 
-    return gameResume;
+    printChoices(userChoice, machineChoice, result);
+    checkScore();
+
+    return result;
   } else if (userChoice === machineChoice) {
-    gameResume.result = 'tie';
-    gameHistory.push({ ...gameResume });
-    printResult(gameResume);
+    result = 'tie';
 
-    return gameResume;
+    printChoices(userChoice, machineChoice, result);
+    checkScore();
+
+    return result;
   } else {
-    gameResume.result = 'lose';
-    gameHistory.push({ ...gameResume });
-    printResult(gameResume);
+    result = 'lose';
 
-    return gameResume;
+    printChoices(userChoice, machineChoice, result);
+    checkScore();
+
+    return result;
   }
 };
 
-const cleanHistory = () => {};
+const checkScore = () => {
+  if (machineScore === 5) {
+    printScore(machineScore, userScore);
+    printWinner('The machine wons!!!');
 
-optionsTag.addEventListener('click', playRound);
+    // userScore = 0;
+    // machineScore = 0;
+
+    return;
+  } else if (userScore === 5) {
+    printScore(machineScore, userScore);
+    printWinner('You Win!!!');
+
+    // userScore = 0;
+    // machineScore = 0;
+
+    return;
+  }
+
+  printScore(machineScore, userScore);
+};
+
 // UI
 
-const printResult = (resume) => {
+const printWinner = (message) => {
+  const messageTemplate = `
+  <div>
+    <h2 class="title"> ${message} </h2>
+    <p class="text">You want to play another roun? Click the button below</p>
+    <button id="restart-game" class="btn-refresh-game">Play Again</button>
+  </div>
+  `;
+  optionsTag.innerHTML = messageTemplate;
+
+  const btnRestart = document.getElementById('restart-game');
+  btnRestart.addEventListener('click', restartGame);
+};
+
+const printChoices = (userChoice, machineChoice, result) => {
+  const uChoiceTag = document.getElementById('user-choice');
+  const mChoiceTag = document.getElementById('machine-choice');
   const resultTag = document.getElementById('result');
-  let message;
 
-  if (resume.result === 'win') message = `You won!!! 🎉`;
-  if (resume.result === 'lose') message = `You lose 😭`;
-  if (resume.result === 'tie') message = `It's a tie 🏳️`;
-
-  resultTag.innerText = message;
-  printScore(gameHistory);
-  printHistory();
-};
-
-const printScore = (history) => {
-  const resultsTag = document.getElementById('results');
-  const userCounterTag = document.getElementById('user-counter');
-  const machineCounterTag = document.getElementById('machine-counter');
-
-  let winsUser = 0;
-  let winsMachine = 0;
-
-  for (const item of history) {
-    if (item.result === 'win') winsUser++;
-    if (item.result === 'lose') winsMachine++;
+  if (result === 'win') {
+    ++userScore;
+    resultTag.innerText = 'You win!!!';
   }
-  // call a function wich cleans the history and restarts the game
-
-  if (winsUser === 5)
-    resultsTag.innerHTML = `<h2 class="title">You Won!!!</h2>`;
-  if (winsMachine === 5)
-    resultsTag.innerHTML = `<h2 class="title">The machine Wons!!!</h2>`;
-
-  userCounterTag.innerText = winsUser;
-  machineCounterTag.innerText = winsMachine;
-};
-
-const printHistory = () => {
-  const tableBodyTag = document.getElementById('table-body');
-
-  const fragment = document.createDocumentFragment();
-  for (const resume of gameHistory) {
-    const trTag = document.createElement('tr');
-
-    for (const key in resume) {
-      const td = document.createElement('td');
-      td.classList.add('text');
-      td.classList.add('table-data');
-      td.innerText = resume[key];
-      trTag.appendChild(td);
-    }
-
-    fragment.appendChild(trTag);
+  if (result === 'lose') {
+    ++machineScore;
+    resultTag.innerText = 'The machine wons';
   }
-  tableBodyTag.innerHTML = '';
-  tableBodyTag.appendChild(fragment);
+  if (result === 'tie') {
+    resultTag.innerText = "It's a tie";
+  }
+
+  uChoiceTag.innerText = userChoice;
+  mChoiceTag.innerText = machineChoice;
 };
+
+const printScore = (machineScore, userScore) => {
+  const userCounter = document.getElementById('user-counter');
+  const machineCounter = document.getElementById('machine-counter');
+
+  userCounter.innerText = userScore;
+  machineCounter.innerText = machineScore;
+
+  // console.log({ machineScore, userScore });
+};
+
+const restartGame = () => {
+  const uChoiceTag = document.getElementById('user-choice');
+  const mChoiceTag = document.getElementById('machine-choice');
+
+  const optionsTemplate = `
+  <section class="section game-options" id="game-options">
+    <button data-option="✊" id="Rock" class="btn">✊</button>
+    <button data-option="🤚" id="Paper" class="btn">🤚</button>
+    <button data-option="✌️" id="Scissors" class="btn">✌️</button>
+  </section>
+  `;
+
+  machineScore = 0;
+  userScore = 0;
+
+  printScore(machineScore, userScore);
+
+  uChoiceTag.innerText = '';
+  mChoiceTag.innerText = '';
+
+  optionsTag.innerHTML = optionsTemplate;
+};
+
+optionsTag.addEventListener('click', playRound);

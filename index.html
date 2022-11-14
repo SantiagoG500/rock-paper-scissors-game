@@ -18,27 +18,29 @@
       <h2 class="title">Choose your option</h2>
       <p id="result" class="text"></p>
     </section>
-  
+
     <section class="section game-options" id="game-options">
-      <button data-option="rock" id="Rock" class="btn">✊</button>
-      <button data-option="paper" id="Paper" class="btn">🤚</button>
-      <button data-option="scissors" id="Scissors" class="btn">✌️</button>
+      <button data-option="✊" id="Rock" class="btn">✊</button>
+      <button data-option="🤚" id="Paper" class="btn">🤚</button>
+      <button data-option="✌️" id="Scissors" class="btn">✌️</button>
     </section>
     
     <section id="history" class="section history">
       
       <div id="results" class="results">
         <section>
+          <p class="game-choice text" id="user-choice"></p>
           <h2 class="title">You</h2>
           <p class="text" id="user-counter">0</p>          
         </section>
         <section>
+          <p class="game-choice text" id="machine-choice"></p>
           <h2 class="title">Machine</h2>
           <p class="text" id="machine-counter">0</p>
         </section>
       </div>
       
-      <table class="table">
+      <!-- <table class="table">
         <caption class="title table-title">Game History</caption>
 
         <thead class="table-header">
@@ -53,7 +55,7 @@
           
         </tbody>
 
-      </table>
+      </table> -->
 
     </section>
   </main>
