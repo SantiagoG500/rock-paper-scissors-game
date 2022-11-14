@@ -62,16 +62,10 @@ const checkScore = () => {
     printScore(machineScore, userScore);
     printWinner('The machine wons!!!');
 
-    // userScore = 0;
-    // machineScore = 0;
-
     return;
   } else if (userScore === 5) {
     printScore(machineScore, userScore);
     printWinner('You Win!!!');
-
-    // userScore = 0;
-    // machineScore = 0;
 
     return;
   }
@@ -85,7 +79,7 @@ const printWinner = (message) => {
   const messageTemplate = `
   <div>
     <h2 class="title"> ${message} </h2>
-    <p class="text">You want to play another roun? Click the button below</p>
+    <p class="text">You want to play another round? Click the button below</p>
     <button id="restart-game" class="btn-refresh-game">Play Again</button>
   </div>
   `;
@@ -102,11 +96,11 @@ const printChoices = (userChoice, machineChoice, result) => {
 
   if (result === 'win') {
     ++userScore;
-    resultTag.innerText = 'You win!!!';
+    resultTag.innerText = 'You win 🎉!!!';
   }
   if (result === 'lose') {
     ++machineScore;
-    resultTag.innerText = 'The machine wons';
+    resultTag.innerText = 'The machine wons 😭';
   }
   if (result === 'tie') {
     resultTag.innerText = "It's a tie";
@@ -122,8 +116,6 @@ const printScore = (machineScore, userScore) => {
 
   userCounter.innerText = userScore;
   machineCounter.innerText = machineScore;
-
-  // console.log({ machineScore, userScore });
 };
 
 const restartGame = () => {
